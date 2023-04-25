@@ -158,6 +158,46 @@ sections in the example below.
   email = "example@example.com"
 ```
 
+### Widget caching
+
+Sidebar strongly affects overall build time, especially if you are using all of our widgets or even more. Widget caching
+can significantly improve the generation time. Cached partials remain the same for all affected pages and are not
+generated multiple times by Hugo. All built-in widgets (`search`, `recent`, `categories`, `taglist`, `social`,
+`languages`) support caching.
+
+Add `cached = true` inside the corresponding widget's dictionary table to activate caching. For example, to cache the
+`recent` widget:
+
+```toml
+[Params.widgets.recent]
+  cached = true
+```
+
+The following sample configuration extract shows how to cache all standard widgets and generate your website faster:
+
+```toml
+[Params.widgets.search]
+  cached = true
+
+[Params.widgets.recent]
+  cached = true
+
+[Params.widgets.categories]
+  cached = true
+
+[Params.widgets.taglist]
+  cached = true
+
+[Params.widgets.social]
+  cached = true
+
+[Params.widgets.languages]
+  cached = true
+```
+
+Not all widgets are cacheable. If a widget contains (can contain) different data for different pages (e.g., for TOC
+generation), then it should not be cached. Always check that your modified/customized widget is cached correctly.
+
 ### Social Widget: custom links
 
 **Mainroad** contains built-in social links in the social widget. In addition to default social links, you may set
@@ -188,6 +228,20 @@ custom SVG icon needs these attributes:
 <svg class="{{ with .class }}{{ . }} {{ end }} icon" width="24" height="24">...</svg>
 ```
 
+You can also specify the `rel` attribute for the link. By default, the attribute value is `"noopener noreferrer"`. You can remove the attribute completely by setting its value to `false`.
+
+```toml
+[[Params.widgets.social.custom]]
+  title = "My Home Page"
+  url = "https://example.com"
+  rel = "me"
+
+[[Params.widgets.social.custom]]
+  title = "Youtube"
+  url = "https://youtube.com/user/username"
+  rel = false
+```
+
 ### Search box widget
 
 The search box widget can refer to the results of Google, Bing, and DuckDuckGo searches. By default, Mainroad uses
@@ -201,8 +255,9 @@ To use a different search engine, first of all, check that the search widget is 
 ```toml
 [Params.widgets.search]
   url = "https://google.com/search"
-  input.name = "sitesearch"
-  input.pre = ""
+  [Params.widgets.search.input]
+    name = "sitesearch"
+    pre = ""
 ```
 
 **DuckDuckGo**:
@@ -210,8 +265,9 @@ To use a different search engine, first of all, check that the search widget is 
 ```toml
 [Params.widgets.search]
   url = "https://duckduckgo.com/"
-  input.name = "sites"
-  input.pre = ""
+  [Params.widgets.search.input]
+    name = "sites"
+    pre = ""
 ```
 
 **Bing**:
@@ -219,8 +275,9 @@ To use a different search engine, first of all, check that the search widget is 
 ```toml
 [Params.widgets.search]
   url = "https://www.bing.com/search"
-  input.name = "q1"
-  input.pre = "site:"
+  [Params.widgets.search.input]
+    name = "q1"
+    pre = "site:"
 ```
 
 **Google PSE**:
@@ -228,8 +285,9 @@ To use a different search engine, first of all, check that the search widget is 
 ```toml
 [Params.widgets.search]
   url = "/search/"
-  input.name = false
-  input.pre = ""
+  [Params.widgets.search.input]
+    name = false
+    pre = ""
 ```
 
 Note that Google PSE requires additional steps to work correctly.

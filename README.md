@@ -118,6 +118,7 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
   tags_counter = false # Enable counter for each tag in "Tags" widget
 
 [Params.widgets.social]
+  cached = false # activate cache if true
   # Enable parts of social widget
   facebook = "username"
   twitter = "username"
@@ -134,15 +135,18 @@ googleAnalytics = "" # Enable Google Analytics by entering your tracking id
   title = "Youtube"
   url = "https://youtube.com/user/username"
   icon = "youtube.svg" # Optional. Path relative to "layouts/partials"
+  rel = "noopener noreferrer" # Set to false to remove the rel attribute
 
 [[Params.widgets.social.custom]]
   title = "My Home Page"
   url = "https://example.com"
 
 [Params.widgets.search]
+  cached = false # activate cache if true
   url = "https://google.com/search"
-  input.name = "sitesearch"
-  input.pre = ""
+  [Params.widgets.search.input]
+    name = "sitesearch"
+    pre = ""
 ```
 
 **Do not copy example config as-is**. Use only those parameters that you need.
